@@ -1,0 +1,32 @@
+
+import java.util.*;
+class main{
+    static String crc(String s, String x)
+    { int two = Integer.valueOf(x,2);
+        String res ="";
+    int left =0;
+    int old = -1;
+     int right =x.length()-1;
+     while(right<s.length())
+     {  //System.out.println(left+""+right);
+         String inte= res+s.substring(left,right+1);
+         int one =Integer.valueOf(inte,2);
+       //  System.out.println(one^two);
+          res = Integer.toBinaryString(one^two);
+          System.out.println(res);
+          old = right;
+         left=right+1;
+         right=right+(x.length()-res.length());
+     }
+    return res+s.substring(old+1);
+     
+    }
+    public static void main(String args[])
+    { Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the data");
+        String s = scan.next();
+        System.out.println("Enter the divisor");
+        String x = scan.next();
+       System.out.println(crc(s,x));
+    }
+}
