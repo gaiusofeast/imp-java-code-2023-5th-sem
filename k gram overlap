@@ -1,0 +1,160 @@
+
+import java.util.*;
+class Node{
+   String str;
+   Node next;
+}
+class ll{
+    Node head;
+    Node tail;
+    void add(String str){
+        if(head==null)
+        {
+            Node node = new Node();
+            node.str=str;
+            head = node;
+            tail = node;
+        }
+        else{
+             Node node = new Node();
+            node.str=str;
+            tail.next= node;
+            tail = node;
+        }
+    }
+    void display()
+    {
+        Node cur = head;
+        while(cur!=null)
+        {
+            System.out.println(cur.str);
+              cur=cur.next;
+      
+        }
+    
+        
+}
+    boolean contains(String str)
+    {
+        Node cur =head;
+        while(cur!=null)
+        {
+            if(str.equals(cur.str))
+                return true;
+            cur =cur.next;
+        }
+        return false;
+    }
+
+}
+class main{
+    public static void main(String args[]){
+    Scanner scan = new Scanner(System.in);
+   System.out.println("Enter how many documents you have");
+    int n = scan.nextInt();
+    String str[] = new String[n];
+     scan.nextLine();
+            for(int i=0;i<n;i++)
+            {
+                System.out.println("Enter doc"+""+i);
+                str[i]= scan.nextLine();
+            }
+//            for(String s: str)
+//            {
+//                System.out.println(s);
+//            }
+          HashMap<String,ll>hs  = new HashMap<>();
+           for(int i=0;i<str.length;i++)
+           {
+               
+                  String god[] =str[i].split(" ");
+//                  for(String life:god)
+
+//                  {
+//                      System.out.println(life);
+//                  }
+                  for(int k=0;k<god.length;k++)
+                  {
+                      for(int l=0;l<god[k].length()-1;l++)
+                      { 
+//                          System.out.println(god[k].substring(l,l+2));
+//                          if(god[k].substring(l,l+2)=="lo"){
+//                               System.out.println("lrjfldrkfkkrfkjrrjejfjerjfe");
+//                          }
+                             
+                  if( hs.containsKey(god[k].substring(l, l+2)))
+               {
+//                      System.out.println(god[k].substring(l, l+2)+"    "+god[k]);
+                     //    if(god[k].substring(l,l+2).equals("lo"))
+//                      System.out.println(god[k]);
+         if(!hs.get(god[k].substring(l, l+2)).contains(god[k]))
+                       hs.get(god[k].substring(l, l+2)).add(god[k]);
+                  }
+                  
+                  else{
+                      
+//                      System.out.println(god[k].substring(l, l+2)+"   "+god[k]);
+//                      if(god[k].substring(l,l+2).equals("lo"))
+//                      System.out.println(god[k]);
+                      hs.put(god[k].substring(l, l+2),new ll());
+                      hs.get(god[k].substring(l, l+2)).add(god[k]);
+                  }
+                          
+                      }//dljflrjf
+                  }
+               
+           }
+          //  hs.get("lo").display();
+          //hs.get("or").display();
+            
+           System.out.println("Enter your query");
+           String x = scan.next();
+          ArrayList<Node> nx = new ArrayList<>();
+           for(int i=0;i<x.length()-1;i++)
+           { 
+               if(hs.containsKey( x.substring(i,i+2) ))
+               {
+                   nx.add(hs.get(x.substring(i,i+2)).head);
+               }
+            
+           }
+            List<String> l = new ArrayList<>();
+             for(Node head : nx) {
+            Node cur = head;
+            while(cur != null){
+                l.add(cur.str);
+                //System.out.println(cur.str);
+                cur = cur.next;
+            }
+        }
+
+        Collections.sort(l);
+        
+//System.out.println(l+"f,");
+//System.out.println(nx.size());
+//   hs.get("lo").display();
+//hs.get("or").display();
+//hs.get("rd").display();
+int flag =1;
+System.out.print("The word that match most to your query are");
+System.out.println();
+for(int i=1;i<l.size();i++)
+{
+    if(l.get(i).equals(l.get(i-1)))
+    { 
+      if(flag==1)
+        System .out.print(" "+l.get(i)+",");
+      flag =0;
+    }
+    else{
+        flag =1;
+    }
+    
+}
+
+
+           
+           
+
+}
+}
