@@ -1,0 +1,109 @@
+
+import java.util.*;
+class Node{
+Node next;
+int val;
+}
+class LinkedList{
+Node head;
+Node tail;
+void add(int num)
+{
+    if(head ==null){
+    Node node = new Node();
+    node.val = num;
+    head = node;
+    tail = node;
+    }
+    else{
+        Node node = new Node();
+    node.val = num;
+     tail.next=node;
+     tail = node;
+      
+    }
+}
+boolean contains(int check)
+{
+    Node curr = head;
+    while(curr!=null)
+    {
+        if(curr.val==check)
+            return true;
+        curr = curr.next;
+    }
+    return false;
+}
+void display()
+{
+    Node curr = head;
+    while(curr!=null)
+    {
+       System.out.println(curr.val);
+       curr = curr.next;
+    }
+}
+}
+
+
+class main{
+    public static void main(String args[])
+    { Scanner scan = new Scanner(System.in);
+        String words[] = {"The new york Times","The Belgian Guardian","The Belgian Post"};
+      //  System.out.println(hs);
+        HashMap<String,LinkedList>  hs = new HashMap<>();
+        for(int i=0;i<words.length;i++)
+        {
+            String[] spli= words[i].split(" ");
+            for(String d:spli)
+            System.out.println(d);
+            for(int j=0;j<spli.length;j++)
+            {
+                if(!spli[j].equalsIgnoreCase("and")&&!spli[j].equalsIgnoreCase("the")&&!spli[j].equalsIgnoreCase("is"))
+                {
+                 if(!hs.containsKey(spli[j]))
+                 {
+                     hs.put(spli[j],new LinkedList());
+                     hs.get(spli[j]).add(i+1);
+                 }
+                 else{
+                     if(!hs.get(spli[j]).contains(i+1))
+                     hs.get(spli[j]).add(i+1);
+                 }
+                }
+            }
+        }
+      hs.get("new").display();
+      hs.get("york").display();
+        System.out.println("Enter your Query");
+        String query = scan.nextLine();
+        String god[] = query.split(" ");
+        for(String d:god)
+            System.out.println(d);
+        ArrayList<Node> life = new ArrayList<>();
+        for(int i=0;i<god.length;i++)
+        {
+            life.add(hs.get(god[i]).head);
+        }
+        ArrayList<Integer> happiness = new ArrayList<>();
+        for(int i=0;i<life.size();i++)
+        {
+            Node curr = life.get(i);
+            while(curr!=null)
+            {
+                happiness.add(curr.val);
+                curr= curr.next;
+            }
+        }
+          System.out.println(hs);
+          int size =god.length;
+   // System.out.println(happiness);
+        Collections.sort(happiness);
+        System.out.println(happiness);
+        for(int i=0;i<happiness.size()-(god.length-1);i++)
+        {
+            if(happiness.get(i)==happiness.get(i+((god.length-1))))
+                System.out.println("Document"+""+happiness.get(i));
+        }
+    }
+}
